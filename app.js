@@ -130,7 +130,7 @@ function updateData() {
                 }
             }
         }, function(err, response, body) {
-            console.log(body)
+            console.log(response)
         });
     }
     //timers.setInterval(updateData, 500);
