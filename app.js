@@ -73,7 +73,7 @@ function executeFakeData() {
 }
 
 
-port.on('data', (data) => {
+parser.on('data', (data) => {
     let stringifiedBuffer = data.toString('ascii');
     console.log(stringifiedBuffer);
     //here's the data
