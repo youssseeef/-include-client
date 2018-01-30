@@ -27,8 +27,8 @@ export class MapComponent implements OnInit {
     setTimeout(function(){
       that.mapService.getNearbyCars(function(value){
         if(value && value.thisCar && value.thisCar.lng && value.thisCar.lat){
-          this.lng  = value.thisCar.lng;
-          this.lat = value.thisCar.lat;
+          that.lng  = value.thisCar.lng;
+          that.lat = value.thisCar.lat;
         }
       });
       that.defaultCall();
