@@ -44,7 +44,7 @@ const port = new SerialPort('/dev/ttyACM1', {
     baudRate: 115200
 });
 const parser = port.pipe(new Delimiter({ delimiter: Buffer.from('\r\n') }))
-port.pipe(parser);
+    //port.pipe(parser);
 
 port.open((status) => {
     if (status) {
@@ -71,7 +71,7 @@ function executeFakeData() {
 
 port.on('data', (data) => {
     let stringifiedBuffer = data.toString('ascii');
-    //console.log(stringifiedBuffer);
+    console.log(stringifiedBuffer);
     //here's the data
     let locationData = stringifiedBuffer.split(',');
     let longitude = locationData[0];
