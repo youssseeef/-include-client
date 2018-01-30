@@ -14,7 +14,7 @@ export class MapComponent implements OnInit {
   //these should be the user's location
   lat: number = 31.254567;
   lng: number = 29.978568;
-
+  iter: number = 0
   otherCarMarkers = [{
     lat:30.851235,
     lng:29.5706148,
@@ -45,20 +45,19 @@ export class MapComponent implements OnInit {
   }
   defaultCall(){
     let that = this;
-    let i =0;
     setTimeout(function(){
       that.mapService.getNearbyCars(function(value){
         if(value && value.thisCar && value.thisCar.lng && value.thisCar.lat){
           that.lng  = value.thisCar.lng;
           that.lat = value.thisCar.lat;
         }
-        if(i<that.simulationArray.length){
+        if(that.iter<that.simulationArray.length){
           that.otherCarMarkers[3] =({
-            lat:that.simulationArray[i].lat,
-            lng:that.simulationArray[i].lon,
-            i:i
+            lat:that.simulationArray[that.iter].lat,
+            lng:that.simulationArray[that.iter].lon,
+            i:that.iter
           })
-          i++;
+          that.iter++;
         }
        
       });
