@@ -26,8 +26,10 @@ export class MapComponent implements OnInit {
     let that = this;
     setTimeout(function(){
       that.mapService.getNearbyCars(function(value){
-        this.lng  = value.thisCar.lng;
-        this.lat = value.thisCar.lat;
+        if(value && value.thisCar && value.thisCar.lng && value.thisCar.lat){
+          this.lng  = value.thisCar.lng;
+          this.lat = value.thisCar.lat;
+        }
       });
       that.defaultCall();
     },1500)
