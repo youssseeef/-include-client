@@ -29,7 +29,7 @@ const otherNearbyCars = [
 ];
 
 //////////////////////////////////////////////////
-/*
+
 //////////////////////////////////SERIAL COMMUNICATIONS SETCION//////////////////////////
 ////////////////////////only uncomment from the /* section //////////////////////////////
 //parsers
@@ -40,7 +40,7 @@ const Delimiter = SerialPort.parsers.Delimiter;
 //TODO:
 // use for test: /dev/ROBOT
 // use for prod: /dev/tty-usbserial1
-const port = new SerialPort('/dev/tty-usbserial1', {
+const port = new SerialPort('/dev/ttyACM1', {
     baudRate: 115200
 });
 const parser = port.pipe(new Delimiter({ delimiter: Buffer.from('\r\n') }))
@@ -78,9 +78,9 @@ port.on('data', (data) => {
     let latitude = locationData[1];
     carInfoLocal.longitude = parseFloat(longitude);
     carInfoLocal.latitude = parseFloat(latitude);
-})
+});
 //////////////////////////////////////////////////////////////////////////////////////
-*/
+//////COMMENT HERE 
 
 /////////////////////TEST//////////////////////////////////
 let fakeDataFrameId = 0;
