@@ -3,6 +3,7 @@ const timers = require('timers');
 const setInterval = timers.setInterval;
 const request = require('request');
 const express = require('express');
+const path = require('path');
 
 const SerialPort = require('serialport'); //TODO: remove /test from here in prod.
 const WEBHOOK_URL = 'https://car-production-app.herokuapp.com/api/cars/update';
@@ -17,6 +18,7 @@ const carInfoLocal = {
 //SECTION RESPONSIBLE FOR MAP//
 
 const app = express();
+app.use(express.static(path.join(__dirname, 'maps/dist')));
 
 app.get('/getNearbyCars', (req, res) => res.json({
     nearbyCars: otherNearbyCars,

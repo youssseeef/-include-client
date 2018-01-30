@@ -25,7 +25,10 @@ export class MapComponent implements OnInit {
   defaultCall(){
     let that = this;
     setTimeout(function(){
-      that.mapService.getNearbyCars();
+      that.mapService.getNearbyCars(function(value){
+        this.lng  = value.thisCar.lng;
+        this.lat = value.thisCar.lat;
+      });
       that.defaultCall();
     },1500)
   }

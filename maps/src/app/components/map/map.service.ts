@@ -7,10 +7,10 @@ import 'rxjs/add/operator/toPromise';
 export class MapService {
     private NEARBY_CARS_URL: string = 'http://localhost:43421/getNearbyCars';
     constructor(private http: HttpClient){}
-    getNearbyCars(){
+    getNearbyCars(callback){
         this.http.get(this.NEARBY_CARS_URL).toPromise().then(
             (value) => {
-                console.log(value);
+                callback(value);
 
         }).catch((rejection) => {
             console.log(rejection); 
