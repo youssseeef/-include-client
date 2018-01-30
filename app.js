@@ -74,7 +74,7 @@ function executeFakeData() {
 
 
 port.on('data', (data) => {
-    let stringifiedBuffer = data.toString('base64');
+    let stringifiedBuffer = data.toString('ascii');
     console.log(stringifiedBuffer);
     //here's the data
     let locationData = stringifiedBuffer.split(',');
