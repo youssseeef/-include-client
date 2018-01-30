@@ -54,7 +54,7 @@ port.open((status) => {
 
 port.on('open', () => {
     console.log('Port opened.');
-    updateData();
+    //updateData();
 
 })
 
@@ -102,7 +102,7 @@ function theTesterAwesomeMegaFunction() {
     fakeDataFrameGenerator();
     updateData();
 }
-theTesterAwesomeMegaFunction();
+//theTesterAwesomeMegaFunction();
 ///////////////////END TEST////////////////////////////////
 function updateData() {
     if (carInfoLocal.latitude != 0 && carInfoLocal.longitude != 0) {
