@@ -19,7 +19,11 @@ const carInfoLocal = {
 const app = express();
 
 app.get('/getNearbyCars', (req, res) => res.json({
-    nearbyCars: otherNearbyCars
+    nearbyCars: otherNearbyCars,
+    thisCar: {
+        lng: carInfoLocal.longitude,
+        lat: carInfoLocal.latitude
+    }
 }))
 
 app.listen(43421, () => console.log('Example app listening on port 43421!'));
@@ -70,7 +74,7 @@ function executeFakeData() {
 
 
 port.on('data', (data) => {
-    let stringifiedBuffer = data.toString('utf8');
+    let stringifiedBuffer = data.toString('base64');
     console.log(stringifiedBuffer);
     //here's the data
     let locationData = stringifiedBuffer.split(',');
