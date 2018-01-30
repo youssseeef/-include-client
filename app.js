@@ -70,7 +70,7 @@ function executeFakeData() {
 
 
 port.on('data', (data) => {
-    let stringifiedBuffer = data.toString('ascii');
+    let stringifiedBuffer = data.toString('utf8');
     console.log(stringifiedBuffer);
     //here's the data
     let locationData = stringifiedBuffer.split(',');
