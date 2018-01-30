@@ -46,7 +46,7 @@ const Delimiter = SerialPort.parsers.Delimiter;
 //TODO:
 // use for test: /dev/ROBOT
 // use for prod: /dev/tty-usbserial1
-const port = new SerialPort('/dev/ttyACM1', {
+const port = new SerialPort('/dev/ttyACM0', {
     baudRate: 115200
 });
 const parser = port.pipe(new Delimiter({ delimiter: Buffer.from('\r\n') }))
