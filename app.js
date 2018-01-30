@@ -71,7 +71,7 @@ function executeFakeData() {
 
 port.on('data', (data) => {
     let stringifiedBuffer = data.toString('ascii');
-    console.log(stringifiedBuffer);
+    //console.log(stringifiedBuffer);
     //here's the data
     let locationData = stringifiedBuffer.split(',');
     let longitude = locationData[0];
@@ -101,6 +101,13 @@ function fakeDataFrameGenerator() {
 function theTesterAwesomeMegaFunction() {
     fakeDataFrameGenerator();
     updateData();
+}
+
+function logEvery1Sec() {
+    setTimeout(function() {
+        console.log(carInfoLocal);
+        logEvery1Sec();
+    }, 1000);
 }
 //theTesterAwesomeMegaFunction();
 ///////////////////END TEST////////////////////////////////
