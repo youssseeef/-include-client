@@ -102,6 +102,7 @@ function theTesterAwesomeMegaFunction() {
     fakeDataFrameGenerator();
     updateData();
 }
+logEvery1Sec();
 
 function logEvery1Sec() {
     setTimeout(function() {
