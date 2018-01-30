@@ -15,7 +15,10 @@ export class MapComponent implements OnInit {
   lat: number = 31.254567;
   lng: number = 29.978568;
 
-  otherCarMarkers = []
+  otherCarMarkers = [{
+    lat:30.851235,
+    lng:29.5706148
+  }]
 
   constructor(private mapService:MapService) { }
 
