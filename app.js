@@ -110,6 +110,7 @@ logEvery1Sec();
 function logEvery1Sec() {
     setTimeout(function() {
         console.log(carInfoLocal);
+        updateData();
         logEvery1Sec();
     }, 1000);
 }
