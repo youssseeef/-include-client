@@ -41,22 +41,26 @@ export class MapComponent implements OnInit {
 
   ngOnInit() {
     this.defaultCall();
-    for(let i =0 ; i<this.simulationArray.length; i++){
-      this.otherCarMarkers[3] =({
-        lat:this.simulationArray[i].lat,
-        lng:this.simulationArray[i].lon,
-        i:i
-      })
-    }
+
   }
   defaultCall(){
     let that = this;
+    let i =0;
     setTimeout(function(){
       that.mapService.getNearbyCars(function(value){
         if(value && value.thisCar && value.thisCar.lng && value.thisCar.lat){
           that.lng  = value.thisCar.lng;
           that.lat = value.thisCar.lat;
         }
+        if(i<that.simulationArray.length){
+          that.otherCarMarkers[3] =({
+            lat:that.simulationArray[i].lat,
+            lng:that.simulationArray[i].lon,
+            i:i
+          })
+          i++;
+        }
+       
       });
      // that.otherCarMarkers[0].lat += 0.0001;
       that.defaultCall();
