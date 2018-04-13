@@ -69,7 +69,7 @@ port.on('open', () => {
 parser.on('data', (data) => {
     let stringifiedBuffer = data.toString('ascii');
     //here's the data
-
+    console.log(stringifiedBuffer);
     let locationData = stringifiedBuffer.split(',');
     let longitude = locationData[0];
     let latitude = locationData[1];
