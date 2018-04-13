@@ -90,8 +90,8 @@ parser.on('data', (data) => {
         accidentFlag = accidentHappened;
     }
     console.log('a: lng' + longitude + ' b: lat' + latitude + ' c:  ' + speed + ' d: ' + accidentFlag);
-    carInfoLocal.longitude = parseFloat(longitude);
-    carInfoLocal.latitude = parseFloat(latitude);
+    carInfoLocal.longitude = parseFloat(parseFloat(longitude).toFixed(6));
+    carInfoLocal.latitude = parseFloat(parseFloat(latitude).toFixed(6));
     carInfoLocal.speed = parseInt(speed);
     carInfoLocal.accidentStatus = parseInt(accidentFlag);
 
