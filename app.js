@@ -4,137 +4,131 @@ const setInterval = timers.setInterval;
 const request = require('request');
 const express = require('express');
 const path = require('path');
+const SerialPort = require('serialport');
 
-const SerialPort = require('serialport'); //TODO: remove /test from here in prod.
-const WEBHOOK_URL = 'https://car-production-app.herokuapp.com/api/cars/update';
+const WEBHOOK_URL_UPDATE = 'https://car-production-app.herokuapp.com/api/cars/update';
+const WEBHOOK_URL_REQUEST = 'https://car-production-app.herokuapp.com/api/cars/request';
+//this is an important flag, if some accident happened, we shall not update accident status with anything that's
+//returned from the device since except the GPS location.
+let accidentHappened = 'false';
+//This is where the local car data exists, it's directly updated from the serial port.
 const carInfoLocal = {
     carId: 'cqowieucop98034ckle65689cwer2132we', //CHANGE THIS BETWEEN BOTH RASPBERRIES
     longitude: 0.0,
     latitude: 0.0,
-    accidentLevel: 0,
+    accidentStatus: 0,
     speed: 70
 };
+//this is where other nearby cars exist, it's updated from the server
+const otherNearbyCars = [
 
+];
+//this is the notifications array, it contains all notifications
+const notificationsArray = [
+
+];
 //SECTION RESPONSIBLE FOR MAP//
-
+//loading app
 const app = express();
+//loading static files
 app.use(express.static(path.join(__dirname, 'maps/dist')));
-
+//internal endpointss
 app.get('/getNearbyCars', (req, res) => res.json({
     nearbyCars: otherNearbyCars,
     thisCar: {
         lng: carInfoLocal.longitude,
         lat: carInfoLocal.latitude
     }
-}))
-
+}));
+app.get('/getNofifications', (req, res) => {
+    res.json({
+        notifications: notificationsArray
+    });
+});
+//open internal communication port
 app.listen(43421, () => console.log('Example app listening on port 43421!'));
-//should fetch them //can hack the way and add a way to fetch them through the update request in the response.
-const otherNearbyCars = [
 
-];
-
-//////////////////////////////////////////////////
 
 //////////////////////////////////SERIAL COMMUNICATIONS SETCION//////////////////////////
-////////////////////////only uncomment from the /* section //////////////////////////////
 //parsers
 const Delimiter = SerialPort.parsers.Delimiter;
-
-// const MockBinding = SerialPort.Binding;
-// MockBinding.createPort('/dev/ROBOT', { echo: false, record: false })
-//TODO:
-// use for test: /dev/ROBOT
-// use for prod: /dev/tty-usbserial1
 const port = new SerialPort('/dev/ttyACM0', {
     baudRate: 115200
 });
 const parser = port.pipe(new Delimiter({ delimiter: Buffer.from('\r\n') }))
-    //port.pipe(parser);
-
 port.open((status) => {
     if (status) {
         return console.log('Status - Serial port: ' + status.message);
     }
-})
-
+});
 port.on('open', () => {
     console.log('Port opened.');
-    //updateData();
-
 })
 
-port.on('open', () => {
-    // To pretend to receive data (only works on open ports)
-    // executeFakeData();
-});
-
-function executeFakeData() {
-    port.binding.emitData(Buffer.from('ANC'));
-    setInterval(executeFakeData, 1000);
-}
-
-
+//this is what gets data from the serial port.
 parser.on('data', (data) => {
     let stringifiedBuffer = data.toString('ascii');
-    console.log(stringifiedBuffer);
     //here's the data
+
     let locationData = stringifiedBuffer.split(',');
     let longitude = locationData[0];
     let latitude = locationData[1];
+    let speed = locationData[2];
+    console.log(locationData[3])
+    let accidentFlag = 0;
+    //use of accidentFlag
+    //no accident already happened - flag is false - should send 0
+    if (accidentHappened == 'false') {
+        if (locationData[3] && locationData[3] != 0) {
+            accidentHappened = locationData[3];
+            accidentFlag = locationData[3];
+        } else {
+            accidentFlag = 0;
+        }
+    } else {
+        accidentFlag = accidentHappened;
+    }
+    console.log('a: lng' + longitude + ' b: lat' + latitude + ' c:  ' + speed + ' d: ' + accidentFlag);
     carInfoLocal.longitude = parseFloat(longitude);
     carInfoLocal.latitude = parseFloat(latitude);
+    carInfoLocal.speed = parseInt(speed);
+    carInfoLocal.accidentStatus = parseInt(accidentFlag);
+
 });
-//////////////////////////////////////////////////////////////////////////////////////
-//////COMMENT HERE 
-
-/////////////////////TEST//////////////////////////////////
-let fakeDataFrameId = 0;
-const fakeDataArray = require('./fakedata').fakeDataArray;
-
-function fakeDataFrameGenerator() {
-    //POSSIBLE Timer_leakage -> NEEDS FIX(but yolo this is just for a test)
-    if (fakeDataFrameId < fakeDataArray.length - 1) {
-        carInfoLocal.latitude = (fakeDataArray[fakeDataFrameId].lat);
-        carInfoLocal.longitude = (fakeDataArray[fakeDataFrameId].long);
-        fakeDataFrameId++;
-    } else {
-        console.log('End of test data');
-    }
-    timers.setTimeout(fakeDataFrameGenerator, 400);
-}
-
-function theTesterAwesomeMegaFunction() {
-    fakeDataFrameGenerator();
+let i = 0;
+setInterval(() => {
     updateData();
-}
-logEvery1Sec();
-
-function logEvery1Sec() {
-    setTimeout(function() {
-        console.log(carInfoLocal);
-        // updateData();
-        logEvery1Sec();
-    }, 1000);
-}
-//theTesterAwesomeMegaFunction();
+}, 1000);
+setInterval(() => {
+    getUpdates();
+}, 2000);
 ///////////////////END TEST////////////////////////////////
 function updateData() {
     if (carInfoLocal.latitude != 0 && carInfoLocal.longitude != 0) {
-        request.post(WEBHOOK_URL, {
+        request.post(WEBHOOK_URL_UPDATE, {
             timeout: 400,
             json: {
                 carId: carInfoLocal.carId,
                 speed: carInfoLocal.speed,
-                accidentFlag: carInfoLocal.accidentLevel,
+                accidentStatus: carInfoLocal.accidentStatus,
                 location: {
-                    lng: carInfoLocal.longitude,
-                    lat: carInfoLocal.latitude
+                    longitude: carInfoLocal.longitude,
+                    latitude: carInfoLocal.latitude
                 }
             }
         }, function(err, response, body) {
-            console.log(response)
+            console.log(body)
         });
     }
-    //timers.setInterval(updateData, 500);
+}
+
+function getUpdates() {
+    // request.post(WEBHOOK_URL_REQUEST, {
+    //     timeout: 400,
+    //     json: {
+    //         carId: carInfoLocal.carId
+    //     }
+    // }, function(err, response, body) {
+    //     //console.log(body);
+    // });
 }
