@@ -106,7 +106,7 @@ setInterval(() => {
 ///////////////////END TEST////////////////////////////////
 function updateData() {
     console.log(carInfoLocal.longitude)
-    if (carInfoLocal.latitude != 0 && carInfoLocal.longitude != 0) {
+    if (carInfoLocal.latitude != 0 && carInfoLocal.longitude != 0 && carInfoLocal.longitude != null && carInfoLocal.latitude != null) {
         request.post(WEBHOOK_URL_UPDATE, {
             timeout: 400,
             json: {
