@@ -72,6 +72,7 @@ parser.on('data', (data) => {
     console.log(stringifiedBuffer);
     let locationData = stringifiedBuffer.split(',');
     let longitude = locationData[0];
+    console.log(longitude)
     let latitude = locationData[1];
     let speed = locationData[2];
     console.log(locationData[3])
