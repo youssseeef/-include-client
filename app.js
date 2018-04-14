@@ -69,13 +69,10 @@ port.on('open', () => {
 parser.on('data', (data) => {
     let stringifiedBuffer = data.toString('ascii');
     //here's the data
-    console.log(stringifiedBuffer);
     let locationData = stringifiedBuffer.split(',');
     let longitude = locationData[0];
-    console.log(longitude)
     let latitude = locationData[1];
     let speed = locationData[2];
-    console.log(locationData[3])
     let accidentFlag = 0;
     //use of accidentFlag
     //no accident already happened - flag is false - should send 0
@@ -105,7 +102,6 @@ setInterval(() => {
 }, 2000);
 ///////////////////END TEST////////////////////////////////
 function updateData() {
-    console.log(carInfoLocal.longitude)
     if (carInfoLocal.latitude != 0 && carInfoLocal.longitude != 0 && carInfoLocal.longitude != null && carInfoLocal.latitude != null) {
         request.post(WEBHOOK_URL_UPDATE, {
             timeout: 400,
@@ -119,7 +115,7 @@ function updateData() {
                 }
             }
         }, function(err, response, body) {
-            console.log(body)
+            console.log(body) //should display OK
         });
     }
 }
