@@ -96,7 +96,7 @@ parser.on('data', (data) => {
 let i = 0;
 setInterval(() => {
     updateData();
-}, 1000);
+}, 1200);
 setInterval(() => {
     getUpdates();
 }, 2000);
@@ -104,7 +104,7 @@ setInterval(() => {
 function updateData() {
     if (carInfoLocal.latitude != 0 && carInfoLocal.longitude != 0 && carInfoLocal.longitude != null && carInfoLocal.latitude != null) {
         request.post(WEBHOOK_URL_UPDATE, {
-            timeout: 400,
+            timeout: 1000,
             json: {
                 carId: carInfoLocal.carId,
                 speed: carInfoLocal.speed,
