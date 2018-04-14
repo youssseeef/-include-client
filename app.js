@@ -115,6 +115,7 @@ function updateData() {
                 }
             }
         }, function(err, response, body) {
+            console.log(err)
             console.log(body) //should display OK
         });
     }
