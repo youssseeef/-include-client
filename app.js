@@ -40,6 +40,9 @@ app.get('/getNearbyCars', (req, res) => res.json({
         lat: carInfoLocal.latitude
     }
 }));
+app.post('/myOwnCarInfo', (req, res) => {
+    res.json(carInfoLocal);
+})
 app.get('/getNofifications', (req, res) => {
     res.json({
         notifications: notificationsArray
