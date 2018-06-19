@@ -1,8 +1,37 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-    <h1>{{title}}</h1>
-    <app-map></app-map>
-    <h2>QT Code for cars</h2>
-    <qrcode [qrdata]="carId" [size]="256" [level]="'M'"></qrcode>
+<div style="text-align:center" class="container-fluid">
+    <br>
+    <div class="row">
+        <div class="col-2">
+            <div class="row">
+                <h1 class="text-blue" style="margin-left: 2%">{{title}}</h1>
+            </div>
+            <div class="row">
+                <app-tab-nav (changedMenu)="selectedMenuInMain=$event" [selectedMenu]="selectedMenuInMain"></app-tab-nav>
+            </div>
+        </div>
+        <!--Maps and Notifications -->
+        <div class="col-10" [hidden]="selectedMenuInMain !== 2">
+            <app-map></app-map>
+        </div>
+        <div class="col-10" *ngIf="selectedMenuInMain === 0">
+            <div class="row" style="text-align: center">
+                <div class="col-8  bg-primary">
+                    <h2 class="">QR-Code for this car</h2>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-8">
+                    <qrcode class="qr-block" [qrdata]="carId" [size]="384" [level]="'M'"></qrcode>
+                </div>
+                <div class="col-3">
+                    <br><br>
+                    <div class="jumbotron">
+                        <h1>Please scan it with our app to add your medical data!</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-</div>
+    </div>

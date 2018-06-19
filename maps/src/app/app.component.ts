@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'INCLUDE!';
-  //should get it from the other file dynamically..
+  title = '#Include';
+  // should get it from the other file dynamically..
   carId = 'cqowieucop98034ckle65689cwer2132we';
+  selectedMenuInMain = 0;
 }

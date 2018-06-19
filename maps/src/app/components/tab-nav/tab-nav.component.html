@@ -1,0 +1,32 @@
+<nav class="menu">
+
+    <input type="checkbox" id="toggle">
+    <ul class="to-change">
+        <li (click)="menuClickEvent(0)">
+            <a>
+                <span class="icon">
+                    <i class="fa fa-qrcode"[ngClass]="selectedMenu == 0 ? 'selected-menu-item' : 'none'" aria-hidden="true"></i>
+                </span>
+            </a>
+        </li>
+        <li (click)="menuClickEvent(1)">
+            <a>
+                <span class="icon">
+                    <i [ngClass]="selectedMenu == 1 ? 'selected-menu-item' : 'none'" class="fa fa-users" aria-hidden="true"></i>
+                </span>
+            </a>
+        </li>
+        <li (click)="menuClickEvent(2)">
+            <a>
+                <span class="icon">
+                    <i [ngClass]="selectedMenu == 2 ? 'selected-menu-item' : 'none'" class="fa fa-map-marker" aria-hidden="true"></i>
+                </span>
+            </a>
+        </li>
+        <li (click)="menuClickEvent(3)">
+            <a>
+                <span [ngClass]="selectedMenu == 3 ? 'selected-menu-item' : 'none'" class="icon">A</span>
+            </a>
+        </li>
+    </ul>
+</nav>
