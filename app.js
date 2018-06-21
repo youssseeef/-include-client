@@ -42,7 +42,7 @@ app.get('/getNearbyCars', (req, res) => res.json({
     }
 }));
 app.get('/getMedicalUsers', (req, res) => {
-    request.post(getAssociatedQRs, {
+    request.post(WEBHOOK_URL_MEDICAL_USERS, {
         json: {
             carId: carInfoLocal.carId,
         }
