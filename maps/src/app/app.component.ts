@@ -26,7 +26,7 @@ export class AppComponent {
     let that = this;
     this.medicalUsersService.getNearbyCars(function(value){
       that.medicalUsersAdded = [];
-      Object.keys(value).forEach((key) => {
+      Object.keys(value.success).forEach((key) => {
         that.medicalUsersAdded.push(key);
       });
     });
