@@ -9,7 +9,7 @@ import { MapComponent } from './components/map/map.component';
 import { HttpClientModule } from '@angular/common/http';
 import { QRCodeModule } from 'angularx-qrcode';
 import { TabNavComponent } from './components/tab-nav/tab-nav.component';
-
+import { MedicalUsers } from './services/medicalUsers.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +25,7 @@ import { TabNavComponent } from './components/tab-nav/tab-nav.component';
     HttpClientModule,
     QRCodeModule,
   ],
-  providers: [MapService],
+  providers: [MapService, MedicalUsers],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

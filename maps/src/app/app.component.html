@@ -26,14 +26,30 @@
                     <qrcode class="qr-block" [qrdata]="carId" [size]="384" [level]="'M'"></qrcode>
                 </div>
                 <div class="col-3">
-                    <br><br>
                     <div class="jumbotron">
                         <h1>Please scan it with our app to add your medical data!</h1>
                     </div>
                 </div>
             </div>
         </div>
-
+        <div class="col-10" *ngIf="selectedMenuInMain == 1">
+            <div class="row" style="text-align: center">
+                <div class="col-10  bg-primary">
+                    <h2>Medical Users Added to this car</h2>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <button type="button" class="btn" (click)="refreshUsers()">Refresh</button>
+            </div>
+            <div class="row" *ngFor="let medicalUser of medicalUsersAdded">
+                <div class="col-10">
+                    <div class="alert alert-primary" role="alert">
+                        <h3>Some accident was detected!</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="col-10" *ngIf="selectedMenuInMain == 3">
             <div class="row" style="text-align: center">
                 <div class="col-10  bg-primary">

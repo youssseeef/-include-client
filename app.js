@@ -5,7 +5,7 @@ const request = require('request');
 const express = require('express');
 const path = require('path');
 const SerialPort = require('serialport');
-
+const WEBHOOK_URL_MEDICAL_USERS = 'https://car-production-app.herokuapp.com/api/cars/getAssociatedQRs';
 const WEBHOOK_URL_UPDATE = 'https://car-production-app.herokuapp.com/api/cars/update';
 const WEBHOOK_URL_REQUEST = 'https://car-production-app.herokuapp.com/api/cars/request';
 //this is an important flag, if some accident happened, we shall not update accident status with anything that's
@@ -41,6 +41,17 @@ app.get('/getNearbyCars', (req, res) => res.json({
         accidentStatus: carInfoLocal.accidentStatus
     }
 }));
+app.get('/getMedicalUsers', (req, res) => {
+    request.post(getAssociatedQRs, {
+        json: {
+            carId: carInfoLocal.carId,
+        }
+    }, function(err, response, body) {
+        console.log(err)
+        console.log(body)
+        return res.json(response);
+    });
+});
 app.post('/myOwnCarInfo', (req, res) => {
     res.json(carInfoLocal);
 })
