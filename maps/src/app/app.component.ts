@@ -16,6 +16,11 @@ export class AppComponent {
   constructor(private medicalUsersService: MedicalUsers) {
 
   }
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.refreshUsers();
+  }
   MapAccident(accidentFlag: number) {
     this.accidentFlag = accidentFlag;
     if (accidentFlag !== 0) {
@@ -24,8 +29,9 @@ export class AppComponent {
   }
   refreshUsers() {
     let that = this;
-    this.medicalUsersService.getNearbyCars(function(value){
+    this.medicalUsersService.getMedicalUsers(function(value){
       that.medicalUsersAdded = [];
+      console.log("Logged here: ")
       Object.keys(value.success).forEach((key) => {
         that.medicalUsersAdded.push(key);
       });
