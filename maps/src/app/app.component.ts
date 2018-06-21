@@ -11,4 +11,11 @@ export class AppComponent {
   // should get it from the other file dynamically..
   carId = 'cqowieucop98034ckle65689cwer2132we';
   selectedMenuInMain = 0;
+  accidentFlag = 0;
+  MapAccident(accidentFlag: number) {
+    this.accidentFlag = accidentFlag;
+    if (accidentFlag !== 0) {
+      this.selectedMenuInMain = 3;
+    }
+  }
 }

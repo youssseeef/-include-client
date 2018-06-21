@@ -12,7 +12,7 @@
         </div>
         <!--Maps and Notifications -->
         <div class="col-10" [hidden]="selectedMenuInMain !== 2">
-            <app-map></app-map>
+            <app-map (accidentDetected)="MapAccident($event)"></app-map>
         </div>
         <div class="col-10" *ngIf="selectedMenuInMain === 0">
             <div class="row" style="text-align: center">
@@ -34,4 +34,27 @@
             </div>
         </div>
 
+        <div class="col-10" *ngIf="selectedMenuInMain == 3">
+            <div class="row" style="text-align: center">
+                <div class="col-10  bg-primary">
+                    <h2>Car Status</h2>
+                </div>
+            </div>
+            <br>
+            <div class="row" *ngIf="accidentFlag == 0">
+                <div class="col-10 ">
+                    <div class="alert alert-success" role="alert">
+                        <h3>Everything is working great!</h3>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row" *ngIf="accidentFlag != 0">
+                <div class="col-10">
+                    <div class="alert alert-danger" role="alert">
+                        <h3>Some accident was detected!</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>

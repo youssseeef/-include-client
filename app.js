@@ -37,7 +37,8 @@ app.get('/getNearbyCars', (req, res) => res.json({
     nearbyCars: otherNearbyCars,
     thisCar: {
         lng: carInfoLocal.longitude,
-        lat: carInfoLocal.latitude
+        lat: carInfoLocal.latitude,
+        accidentStatus: carInfoLocal.accidentStatus
     }
 }));
 app.post('/myOwnCarInfo', (req, res) => {
@@ -61,7 +62,7 @@ const port = new SerialPort('/dev/ttyACM0', {
 const parser = port.pipe(new Delimiter({ delimiter: Buffer.from('\r\n') }))
 port.open((status) => {
     if (status) {
-        return console.log('Status - Serial port: ' + status.message);
+        console.log('Status - Serial port: ' + status.message);
     }
 });
 port.on('open', () => {

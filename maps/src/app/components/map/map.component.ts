@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { MapService } from './map.service';
 
 @Component({
@@ -12,6 +12,8 @@ export class MapComponent implements OnInit {
   lat = 31.254567;
   lng = 29.978568;
   iter = 0;
+  accidentFlag = 0;
+  @Output() accidentDetected: EventEmitter<number> = new EventEmitter<number>();
   otherCarMarkers = [];
   /**
    * {
@@ -51,6 +53,8 @@ export class MapComponent implements OnInit {
         if (value && value.thisCar && value.thisCar.lng && value.thisCar.lat) {
           that.lng  = value.thisCar.lng;
           that.lat = value.thisCar.lat;
+          that.accidentFlag = value.thisCar.accidentStatus;
+          that.accidentDetected.emit(that.accidentFlag);  
         }
         // if(that.iter<that.simulationArray.length){
         //   that.otherCarMarkers[3] =({
