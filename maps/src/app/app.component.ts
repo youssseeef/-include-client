@@ -21,6 +21,12 @@ export class AppComponent {
     //Add 'implements OnInit' to the class.
     this.refreshUsers();
   }
+  ngAfterViewInit() {
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
+    this.refreshUsers();
+
+  }
   MapAccident(accidentFlag: number) {
     this.accidentFlag = accidentFlag;
     if (accidentFlag !== 0) {
@@ -32,9 +38,14 @@ export class AppComponent {
     this.medicalUsersService.getMedicalUsers(function(value){
       that.medicalUsersAdded = [];
       console.log("Logged here: ")
-      Object.keys(value.success).forEach((key) => {
-        that.medicalUsersAdded.push(key);
-      });
+      if(value.success !== null){
+        Object.keys(value.success).forEach((key) => {
+          that.medicalUsersAdded.push(key);
+        });
+      }else{
+        console.log('II can not fetch medical users.');
+      }
+      
     });
   }
 }

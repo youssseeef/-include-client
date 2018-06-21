@@ -49,7 +49,7 @@ app.get('/getMedicalUsers', (req, res) => {
     }, function(err, response, body) {
         console.log(err)
         console.log(body)
-        return res.json(response.success);
+        return res.json(body);
     });
 });
 app.post('/myOwnCarInfo', (req, res) => {

@@ -7,7 +7,7 @@
                 <h1 class="text-blue" style="margin-left: 2%">{{title}}</h1>
             </div>
             <div class="row">
-                <app-tab-nav (changedMenu)="selectedMenuInMain=$event" [selectedMenu]="selectedMenuInMain"></app-tab-nav>
+                <app-tab-nav (changedMenu)="selectedMenuInMain=$event; refreshUsers()" [selectedMenu]="selectedMenuInMain"></app-tab-nav>
             </div>
         </div>
         <!--Maps and Notifications -->
@@ -40,8 +40,9 @@
             </div>
             <br>
             <div class="row">
-                <button type="button" class="btn" (click)="refreshUsers()">Refresh</button>
+                <button type="button" class="btn btn-primary" (click)="refreshUsers()">Refresh</button>
             </div>
+            <br>
             <div class="row" *ngFor="let medicalUser of medicalUsersAdded">
                 <div class="col-10">
                     <div class="alert alert-primary" role="alert">
