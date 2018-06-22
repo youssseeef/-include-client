@@ -76,6 +76,7 @@ portOpening();
 
 //this should be also sent with the car data if there is any error in the connection
 let MasterConnectionErrorCounter = 0;
+let previousStateIsError = true;
 
 function portOpening() {
     port.open((error) => {
@@ -83,7 +84,10 @@ function portOpening() {
             setTimeout(() => {
                 portOpening();
                 MasterConnectionErrorCounter++;
+                previousStateIsError = true;
             }, 1000);
+        } else {
+            previousStateIsError = false;
         }
     })
 }
@@ -129,7 +133,7 @@ setInterval(() => {
 }, 2000);
 ///////////////////END TEST////////////////////////////////
 function updateData() {
-    if (carInfoLocal.latitude != 0 && carInfoLocal.longitude != 0 && carInfoLocal.longitude != null && carInfoLocal.latitude != null) {
+    if (carInfoLocal.latitude !== 0 && carInfoLocal.longitude !== 0 && carInfoLocal.longitude !== null && carInfoLocal.latitude !== null && previousStateIsError === false) {
         request.post(WEBHOOK_URL_UPDATE, {
             timeout: 1000,
             json: {
