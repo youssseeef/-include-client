@@ -68,14 +68,22 @@ app.listen(43421, () => console.log('Example app listening on port 43421!'));
 //parsers
 const Delimiter = SerialPort.parsers.Delimiter;
 const port = new SerialPort('/dev/ttyACM0', {
-    baudRate: 115200
+    baudRate: 115200,
+    autoOpen: false
 });
 const parser = port.pipe(new Delimiter({ delimiter: Buffer.from('\r\n') }))
-port.open((status) => {
-    if (status) {
-        console.log('Status - Serial port: ' + status.message);
-    }
-});
+portOpening();
+
+function portOpening() {
+    port.open((error) => {
+        if (error) {
+            setTimeout(() => {
+                portOpening();
+            }, 1000);
+        }
+    })
+}
+
 port.on('open', () => {
     console.log('Port opened.');
 })
