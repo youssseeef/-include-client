@@ -75,7 +75,7 @@ const parser = port.pipe(new Delimiter({ delimiter: Buffer.from('\r\n') }))
 portOpening();
 
 //this should be also sent with the car data if there is any error in the connection
-MasterConnectionErrorCounter = 0;
+let MasterConnectionErrorCounter = 0;
 
 function portOpening() {
     port.open((error) => {
