@@ -136,7 +136,9 @@ parser.on('data', (data) => {
         carInfoLocal.latitude = parseFloat(parseFloat(latitude).toFixed(6));
         carInfoLocal.speed = parseInt(speed);
         //carInfoLocal.accidentStatus = accidentFlag;
-        carInfoLocal.accidentStatus = locationData[3];
+        if (locationData[3].split('\r').length === 2) {
+            carInfoLocal.accidentStatus = locationData[3].split('\r')[0];
+        }
         //port.update();
     } else {
         port.flush();
