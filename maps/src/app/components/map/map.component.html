@@ -6,6 +6,15 @@
         <h2 class=" bg-primary">Notifications and Map</h2>
     </div>
 </div>
+<div class="col-10">
+    <div class="row" *ngIf="accidentFlag > 0 && accidentFlag < 11">
+        <div class="col-12">
+            <div class="alert alert-danger" role="alert">
+                <h3>{{arr[accidentFlag -1]}}</h3>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="row">
     <agm-map [latitude]="lat" [longitude]="lng" [zoom]=18>
         <agm-marker [latitude]="lat" [longitude]="lng" [iconUrl]="'assets/myself.png'"></agm-marker>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import * as $ from 'jquery';
+// import * as $ from 'jquery';
 import { MedicalUsers } from './services/medicalUsers.service';
 @Component({
   selector: 'app-root',
@@ -17,35 +17,34 @@ export class AppComponent {
 
   }
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
+    // Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    // Add 'implements OnInit' to the class.
     this.refreshUsers();
   }
   ngAfterViewInit() {
-    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
-    //Add 'implements AfterViewInit' to the class.
+    // Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    // Add 'implements AfterViewInit' to the class.
     this.refreshUsers();
 
   }
   MapAccident(accidentFlag: number) {
     this.accidentFlag = accidentFlag;
     if (accidentFlag !== 0) {
-      this.selectedMenuInMain = 3;
+      // this.selectedMenuInMain = 3;
     }
   }
   refreshUsers() {
-    let that = this;
+    const that = this;
     this.medicalUsersService.getMedicalUsers(function(value){
       that.medicalUsersAdded = [];
-      console.log("Logged here: ")
-      if(value.success !== null){
+      console.log('Logged here: ');
+      if(value.success !== null) {
         Object.keys(value.success).forEach((key) => {
           that.medicalUsersAdded.push(key);
         });
-      }else{
+      }else {
         console.log('II can not fetch medical users.');
       }
-      
     });
   }
 }
