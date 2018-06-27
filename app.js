@@ -139,6 +139,7 @@ parser.on('data', (data) => {
         console.log(locationData[3])
         if (locationData[3].split('\r').length === 2) {
             try {
+                console.log("GOT HERE")
                 carInfoLocal.accidentStatus = parseInt(locationData[3].split('\r')[0]);
                 console.log(carInfoLocal.accidentStatus);
             } catch (ex) {
