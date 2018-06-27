@@ -138,6 +138,7 @@ parser.on('data', (data) => {
         //carInfoLocal.accidentStatus = accidentFlag;
         if (locationData[3].split('\r').length === 2) {
             carInfoLocal.accidentStatus = locationData[3].split('\r')[0];
+            console.log(accidentStatus);
         }
         //port.update();
     } else {
