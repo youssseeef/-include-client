@@ -116,8 +116,8 @@ parser.on('data', (data) => {
 
     console.log(locationData.length);
     console.log(latitude.length);
-    if (locationData.hasOwnProperty('length') && locationData.length === 4 && speed === '7' && longitude.hasOwnProperty('length') && longitude.length === 10 &&
-        latitude.hasOwnProperty('length') && latitude.length === 10) {
+    if (locationData.hasOwnProperty('length') && locationData.length === 4 && speed === '7' && longitude.hasOwnProperty('length') && longitude.length === 11 &&
+        latitude.hasOwnProperty('length') && latitude.length === 11) {
         //use of accidentFlag
         //no accident already happened - flag is false - should send 0
 
