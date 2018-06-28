@@ -9,8 +9,8 @@ import { MapService } from './map.service';
 export class MapComponent implements OnInit {
   // these are where we center the user in the map.
   // these should be the user's location
-  lat = 31.206611;
-  lng = 29.923000;
+  lat = 0; // 31.206611;
+  lng = 0; // 29.923000;
   arr: string[] = [
     'Accident - Ambulance and Rescue on the way. Area Warning for nearby cars.',
     'Cooling Problem within your car',
@@ -24,7 +24,7 @@ export class MapComponent implements OnInit {
     'Device malfunction. We will hold off sending data from your car.'
   ];
   iter = 0;
-  accidentFlag = 1;
+  accidentFlag = 0;
   @Output() accidentDetected: EventEmitter<number> = new EventEmitter<number>();
   otherCarMarkers = [];
   /**
