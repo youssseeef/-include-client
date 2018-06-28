@@ -8,6 +8,8 @@ import { MedicalUsers } from './services/medicalUsers.service';
 })
 export class AppComponent {
   title = '#Include';
+  welcomeFlag = 0;
+  welcomeText = 'Welcome to Include!';
   // should get it from the other file dynamically..
   carId = 'cqowieucop98034ckle65689cwer2132we';
   selectedMenuInMain = 0;
@@ -24,6 +26,18 @@ export class AppComponent {
   ngAfterViewInit() {
     // Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     // Add 'implements AfterViewInit' to the class.
+    setTimeout(() => {
+      this.welcomeFlag++;
+      this.welcomeText = "Loading Include....";
+      setTimeout(() => {
+        this.welcomeFlag++;
+        this.welcomeText = "Wait for a few moments...";
+        setTimeout(() => {
+          this.welcomeFlag++;
+          this.welcomeText = "Welcome to Include!";
+        }, 1500);
+      }, 1500);
+    }, 1500);
     this.refreshUsers();
 
   }
