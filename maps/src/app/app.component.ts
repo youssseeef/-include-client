@@ -38,7 +38,7 @@ export class AppComponent {
     this.medicalUsersService.getMedicalUsers(function(value){
       that.medicalUsersAdded = [];
       console.log('Logged here: ');
-      if(value.success !== null) {
+      if (value.success !== null) {
         Object.keys(value.success).forEach((key) => {
           that.medicalUsersAdded.push(key);
         });
@@ -46,5 +46,13 @@ export class AppComponent {
         console.log('II can not fetch medical users.');
       }
     });
+  }
+  deleteUser(i) {
+    const userIdToBeDeleted = this.medicalUsersAdded[i];
+    this.medicalUsersService.deleteMedicalUser(userIdToBeDeleted, (response) => {
+      console.log(response);
+    });
+    this.refreshUsers();
+    this.medicalUsersAdded.splice(i);
   }
 }

@@ -7,6 +7,7 @@ const path = require('path');
 const SerialPort = require('serialport');
 
 const WEBHOOK_URL_MEDICAL_USERS = 'https://car-production-app.herokuapp.com/api/cars/getAssociatedQRs';
+const WEBHOOK_URL_DELETE_MEDICAL_USER = 'https://car-production-app.herokuapp.com/api/cars/deleteMedicalUser';
 const WEBHOOK_URL_UPDATE = 'https://car-production-app.herokuapp.com/api/cars/update';
 const WEBHOOK_URL_REQUEST = 'https://car-production-app.herokuapp.com/api/cars/request';
 //this is an important flag, if some accident happened, we shall not update accident status with anything that's
@@ -53,6 +54,24 @@ app.get('/getMedicalUsers', (req, res) => {
         console.log(body)
         return res.json(body);
     });
+});
+app.get('/deleteMedicalUser', (req, res) => {
+    try {
+        if (req.query !== null && req.query.userToBeDeleted !== null) {
+            request.post(WEBHOOK_URL_DELETE_MEDICAL_USER, {
+                timeout: 1000,
+                json: {
+                    carId: carInfoLocal.carId,
+                    userToBeDeleted: req.query.userToBeDeleted
+                }
+            }, function(err, response, body) {
+                console.log(err)
+                console.log('body: ' + body) //should display OK
+            });
+        }
+    } catch (error) {
+        return res.sendStatus(503);
+    }
 });
 app.post('/myOwnCarInfo', (req, res) => {
     res.json(carInfoLocal);
@@ -138,7 +157,7 @@ parser.on('data', (data) => {
         carInfoLocal.speed = parseInt(speed);
         //carInfoLocal.accidentStatus = accidentFlag;
         console.log(locationData[3])
-        if (locationData[3].split('\r').length === 2) {
+        if (locationData[3]) {
             try {
                 console.log("GOT HERE")
                 carInfoLocal.accidentStatus = parseInt(locationData[3].split('\r')[0]);
