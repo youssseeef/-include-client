@@ -5,7 +5,7 @@ const request = require('request');
 const express = require('express');
 const path = require('path');
 const SerialPort = require('serialport');
-
+const fs = require('fs');
 const WEBHOOK_URL_MEDICAL_USERS = 'https://car-production-app.herokuapp.com/api/cars/getAssociatedQRs';
 const WEBHOOK_URL_DELETE_MEDICAL_USER = 'https://car-production-app.herokuapp.com/api/cars/deleteMedicalUser';
 const WEBHOOK_URL_UPDATE = 'https://car-production-app.herokuapp.com/api/cars/update';
@@ -81,6 +81,31 @@ app.get('/getNofifications', (req, res) => {
         notifications: notificationsArray
     });
 });
+/**
+ * This function should just load from the file. As the location is updated
+ * It should update the location into the global variable
+ */
+function locationFromFileUpdate() {
+    fs.readFile('lastKnownLocation', function(err, data) {
+        if (!err) {
+            let stringifiedData = (data.toString());
+            let splitData = stringifiedData.split(',');
+            try {
+                carInfoLocal.latitude = parseFloat(splitData[0]);
+                carInfoLocal.longitude = parseFloat(splitData[1]);
+
+            } catch (error) {
+                console.log("Some error happened reading the file.");
+
+            }
+        } else {
+            console.log(err);
+
+        }
+    });
+}
+locationFromFileUpdate();
+
 //open internal communication port
 app.listen(43421, () => console.log('Example app listening on port 43421!'));
 
@@ -125,7 +150,7 @@ port.on('open', () => {
 //this is what gets data from the serial port.
 parser.on('data', (data) => {
     let stringifiedBuffer = data.toString();
-    console.log(stringifiedBuffer);
+    console.log("buff buff" + stringifiedBuffer);
     //here's the data
     let locationData = stringifiedBuffer.split(',');
     let longitude = locationData[0];
@@ -191,6 +216,7 @@ function updateData() {
     if (carInfoLocal.latitude !== 0 && !Number.isNaN(carInfoLocal.latitude) && typeof carInfoLocal.latitude === 'number' &&
         carInfoLocal.longitude !== 0 && !Number.isNaN(carInfoLocal.longitude) && typeof carInfoLocal.longitude === 'number' &&
         previousStateIsError === false) {
+        updateTheFileWithTheLocation();
         console.log(carInfoLocal)
         request.post(WEBHOOK_URL_UPDATE, {
             timeout: 1000,
@@ -208,6 +234,19 @@ function updateData() {
             console.log('body: ' + body) //should display OK
         });
     }
+}
+
+function updateTheFileWithTheLocation() {
+    if (carInfoLocal.longitude !== 0 && carInfoLocal.latitude !== 0) {
+        fs.writeFile("lastKnownLocation", carInfoLocal.latitude + "," + carInfoLocal.longitude, function(err) {
+            if (err) {
+                return console.log(err);
+            }
+
+            console.log("The file was saved!");
+        });
+    }
+
 }
 
 function getUpdates() {
